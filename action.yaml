@@ -1,0 +1,24 @@
+name: 'Npm Caching and Install'
+description: 'Caching and installing node dependencies'
+# inputs:
+#   who-to-greet:  # id of input
+#     description: 'Who to greet'
+#     required: true
+#     default: 'World'
+# outputs:
+#   random-number:
+#     description: "Random number"
+#     value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - name: Cache NPM dependencies
+      uses: actions/cache@v4
+      with:
+        key: "${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}"
+        path: node_modules
+
+    - name: Install Dependencies
+      run: npm install
+      shell: bash
+
